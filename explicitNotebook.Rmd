@@ -1,0 +1,69 @@
+---
+title: "Explicit Learning and Localization Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r echo=FALSE}
+source("explicitFunctions.R")
+```
+
+All data files are saved as csv files in the data directory. There are indiual files for each task and each group.
+
+# Learning Curves
+
+## Import adaptation data
+Median reach angles per trial, per participant.
+
+```{r}
+# adaptationDF <- LoadReachData()
+```
+
+***
+
+# Reach After Effects
+
+## Import aftereffects data
+Median angular deviation of the hand from target direction of each participant during open-loop reaches.
+afterEffectsDF contains __baseline-corrected__ aftereffects recorded during the 'Rotated' session.
+withoutStratAEDF contains aftereffects recorded during both sessions when participants do not employ a concious strategy, __with no baseline corrections__.
+
+```{r}
+afterEffectsDF <- LoadAEData()
+withoutStratAEDF <- LoadAEData_NoBLCorr()
+```
+
+## Analysis of variance
+
+First, we confirm that adaptation led to after effects. When we compare open-loop reaches where participants don't conciously employ a strategy, they should perform differently in the 'Rotated' session when compared to the 'Aligned' session.
+
+__Note: we are just interested in the main effect of session. Should this even include instruction and rotation size?__
+
+```{r warning=FALSE}
+sessionAEAOV <- ezANOVA(data=withoutStratAEDF, dv=reachAE, wid=participant, 
+                         within=.(session), between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+sessionAEAOV$ANOVA$p <-format(round(sessionAEAOV$ANOVA$p, 3), nsmall = 2)
+sessionAEAOV$ANOVA$F <-format(round(sessionAEAOV$ANOVA$F, 4), nsmall = 2)
+print(sessionAEAOV$ANOVA)
+```
+
+After confirming the presense of aftereffects, we test if instructions/rotation size brought about explicit learning.
+We perform an ANOVA with rotation size and instruction type as between-subject factors, and strategy use (employing or not employing a strategy when reacing) as a within-subject factor.
+
+```{r warning=FALSE}
+aeANOVA <- ezANOVA(data=afterEffectsDF, dv=reachAE, wid=participant, 
+                   within=stratUse, between=.(instruction, rotationSize), 
+                   return_aov=TRUE, type=3)
+aeANOVA$ANOVA$p <-format(round(aeANOVA$ANOVA$p, 3), nsmall = 2)
+
+print(aeANOVA$ANOVA)
+```
+
