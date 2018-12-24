@@ -31,9 +31,9 @@ Median reach angles per trial, per participant.
 # Reach After Effects
 
 ## Import aftereffects data
-Median angular deviation of the hand from target direction of each participant during open-loop reaches.
-afterEffectsDF contains __baseline-corrected__ aftereffects recorded during the 'Rotated' session.
-withoutStratAEDF contains aftereffects recorded during both sessions when participants do not employ a concious strategy, __with no baseline corrections__.
+Median angular deviation of the hand from target direction of each participant during open-loop reaches.  
+afterEffectsDF contains __baseline-corrected__ aftereffects recorded during the 'Rotated' session.  
+withoutStratAEDF contains aftereffects recorded during both sessions when participants do not employ a concious strategy, __with no baseline corrections__.  
 
 ```{r}
 afterEffectsDF <- LoadAEData()
@@ -42,7 +42,7 @@ withoutStratAEDF <- LoadAEData_NoBLCorr()
 
 ## Analysis of variance
 
-First, we confirm that adaptation led to after effects. When we compare open-loop reaches where participants don't conciously employ a strategy, they should perform differently in the 'Rotated' session when compared to the 'Aligned' session.
+First, we confirm that adaptation led to after effects. When we compare open-loop reaches where participants don't conciously employ a strategy, they should perform differently in the 'Rotated' session when compared to the 'Aligned' session.  
 
 __Note: we are just interested in the main effect of session. Should this even include instruction and rotation size?__
 
@@ -54,6 +54,7 @@ sessionAEAOV$ANOVA$p <-format(round(sessionAEAOV$ANOVA$p, 3), nsmall = 2)
 sessionAEAOV$ANOVA$F <-format(round(sessionAEAOV$ANOVA$F, 4), nsmall = 2)
 print(sessionAEAOV$ANOVA)
 ```
+Note that there are no session x intruction or session x rotation size interactions -- all groups had similar implicit afteffects.
 
 After confirming the presense of aftereffects, we test if instructions/rotation size brought about explicit learning.
 We perform an ANOVA with rotation size and instruction type as between-subject factors, and strategy use (employing or not employing a strategy when reacing) as a within-subject factor.
@@ -67,3 +68,60 @@ aeANOVA$ANOVA$p <-format(round(aeANOVA$ANOVA$p, 3), nsmall = 2)
 print(aeANOVA$ANOVA)
 ```
 
+## T-tests
+
+T-tests are conducted (4 t-tests, one for each group), comparing aftereffects when using a strategy vs when not using one in the 'Rotated' session.
+
+Non-instructed 30° group
+```{r}
+t.test(subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'with'), select = reachAE ))
+
+```
+
+Instructed 30° group
+```{r}
+t.test(subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 30) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 30) & (stratUse == 'with'), select = reachAE ))
+
+```
+
+Non-instructed 60° group
+```{r}
+t.test(subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 60) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 60) & (stratUse == 'with'), select = reachAE ))
+
+```
+
+Instructed 60° group
+```{r}
+t.test(subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 60) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 60) & (stratUse == 'with'), select = reachAE ))
+
+```
+
+__Only the non-instructed 30° group did not show significantly different angular deviations when including a strategy.__
+
+***
+
+# Hand Localization
+
+***
+
+# Extra material and testing
+
+```{r}
+test <- t.test(subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'with'), select = reachAE ))
+
+cat("\nT-test for non-instructed 30° group -- aftereffects with vs without strategy use; mean(sd)")
+cat("\n", sprintf("Without: %.3f (%.3f)", test$estimate["mean of x"],
+                  sd(subset(afterEffectsDF,
+                            (instruction == 'non-instructed')
+                            & (rotationSize == 30)
+                            & (stratUse == 'without'),
+                            select = reachAE)$reachAE)))
+cat("\n", sprintf("With: %.3f (%.3f)", as.double(test$estimate["mean of y"]),
+                  sd(subset(afterEffectsDF,
+                            (instruction == 'non-instructed')
+                            & (rotationSize == 30)
+                            & (stratUse == 'with'),
+                            select = reachAE)$reachAE)))
+cat("\n", sprintf("t(%.0f) = %.3f, p = %.3f", test$parameter, test$statistic, test$p.value), "\n\n")
+
+```
