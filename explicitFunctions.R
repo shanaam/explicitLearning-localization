@@ -10,12 +10,14 @@ library(ez)
 LoadReachData <- function() {
   curves <- read.csv('data/learningCurveAOVData.csv')
  
+  curves$block3mean <- NULL
+  curves$block4mean <- NULL
   
   # reshape needs funky column names in the form: characters.number, for columns that need to be merged::
-  colnames(curves) <- c('participant', 'block1.1', 'block2.2', 'block3.3', 'instruction', 'rotationSize')
+  colnames(curves) <- c('participant', 'block1.1', 'block2.2', 'blockFinal.3', 'instruction', 'rotationSize')
   
   # reshape the plots so that ALL dependent variables are in one column (deviation for Tap data)
-  curves <- reshape(curves, direction="long", varying=c('block1.1', 'block2.2', 'block3.3'), timevar='block', v.names='meanDeviation', times=c('block1', 'block2', 'finalblock'))
+  curves <- reshape(curves, direction="long", varying=c('block1.1', 'block2.2', 'blockFinal.3'), timevar='block', v.names='meanDeviation', times=c('block1', 'block2', 'finalblock'))
   
   # get rid of the id column and rownames after reshaping
   curves$id <- NULL
@@ -32,11 +34,14 @@ LoadReachData <- function() {
 LoadNormReachData <- function() {
   curves <- read.csv('data/normLearningCurveAOVData.csv')
   
+  curves$block3mean <- NULL
+  curves$block4mean <- NULL
+  
   # reshape needs funky column names in the form: characters.number, for columns that need to be merged::
-  colnames(curves) <- c('participant', 'block1.1', 'block2.2', 'block3.3', 'instruction', 'rotationSize')
+  colnames(curves) <- c('participant', 'block1.1', 'block2.2', 'blockFinal.3', 'instruction', 'rotationSize')
   
   # reshape the plots so that ALL dependent variables are in one column (deviation for Tap data)
-  curves <- reshape(curves, direction="long", varying=c('block1.1', 'block2.2', 'block3.3'), timevar='block', v.names='meanDeviation', times=c('block1', 'block2', 'finalblock'))
+  curves <- reshape(curves, direction="long", varying=c('block1.1', 'block2.2', 'blockFinal.3'), timevar='block', v.names='meanDeviation', times=c('block1', 'block2', 'finalblock'))
   
   # get rid of the id column and rownames after reshaping
   curves$id <- NULL

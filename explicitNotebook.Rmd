@@ -20,11 +20,28 @@ All data files are saved as csv files in the data directory. There are indiual f
 # Learning Curves
 
 ## Import adaptation data
-Median reach angles per trial, per participant.
+Reach angles per trial, per participant.
 
 ```{r}
-# adaptationDF <- LoadReachData()
+adaptationDF <- LoadReachData()
 ```
+
+
+First, we should see if people learn.  
+
+Second, we look for effects of instruction or rotation size on block by block learning.  
+
+```{r warning=FALSE}
+blockedLCANOVA <- ezANOVA(data=adaptationDF, dv=meanDeviation, wid=participant, 
+                         within=.(block), between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+blockedLCANOVA$ANOVA$p <-format(round(blockedLCANOVA$ANOVA$p, 3), nsmall = 2)
+blockedLCANOVA$ANOVA$F <-format(round(blockedLCANOVA$ANOVA$F, 4), nsmall = 2)
+print(blockedLCANOVA$ANOVA)
+```
+
+
+## Repeat stats on learning curves normalized for rotation size.  
 
 ***
 
@@ -64,6 +81,7 @@ aeANOVA <- ezANOVA(data=afterEffectsDF, dv=reachAE, wid=participant,
                    within=stratUse, between=.(instruction, rotationSize), 
                    return_aov=TRUE, type=3)
 aeANOVA$ANOVA$p <-format(round(aeANOVA$ANOVA$p, 3), nsmall = 2)
+aeANOVA$ANOVA$F <-format(round(aeANOVA$ANOVA$F, 4), nsmall = 2)
 
 print(aeANOVA$ANOVA)
 ```
