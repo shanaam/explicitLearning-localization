@@ -29,7 +29,8 @@ adaptationDF <- LoadReachData()
 
 First, we should see if people learn.  
 
-Second, we look for effects of instruction or rotation size on block by block learning.  
+## Effects of instruction and rotation size on learning
+Second, we look for effects of instruction or rotation size on block by block learning (called "trial sets" in the manuscript; 3 trials each).  
 
 ```{r warning=FALSE}
 blockedLCANOVA <- ezANOVA(data=adaptationDF, dv=meanDeviation, wid=participant, 
@@ -38,6 +39,36 @@ blockedLCANOVA <- ezANOVA(data=adaptationDF, dv=meanDeviation, wid=participant,
 blockedLCANOVA$ANOVA$p <-format(round(blockedLCANOVA$ANOVA$p, 3), nsmall = 2)
 blockedLCANOVA$ANOVA$F <-format(round(blockedLCANOVA$ANOVA$F, 4), nsmall = 2)
 print(blockedLCANOVA$ANOVA)
+```
+__Note: does the main effect of block here tell us that there is learning?  __
+The interactions on rows 6 and 7 tell us that both instruction and rotation size interact with block by block learning.  
+However, this doesn't tell us where the interaction lies; Tukey's can tell us where, OR... 
+
+## Main effects of instruction or rotation size in block 1 
+
+2x2 ANOVA
+```{r warning=FALSE, message=FALSE}
+block1DF <- adaptationDF[adaptationDF$block == "block1", ]
+block1ANOVA <- ezANOVA(data=block1DF, dv=meanDeviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+block1ANOVA$ANOVA$p <-format(round(block1ANOVA$ANOVA$p, 3), nsmall = 2)
+block1ANOVA$ANOVA$F <-format(round(block1ANOVA$ANOVA$F, 4), nsmall = 2)
+print(block1ANOVA$ANOVA)
+```
+
+
+## Main effects of instruction or rotation size in block 1 
+
+2x2 ANOVA
+```{r warning=FALSE, message=FALSE}
+block2DF <- adaptationDF[adaptationDF$block == "block2", ]
+block2ANOVA <- ezANOVA(data=block2DF, dv=meanDeviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+block2ANOVA$ANOVA$p <-format(round(block2ANOVA$ANOVA$p, 3), nsmall = 2)
+block2ANOVA$ANOVA$F <-format(round(block2ANOVA$ANOVA$F, 4), nsmall = 2)
+print(block2ANOVA$ANOVA)
 ```
 
 
