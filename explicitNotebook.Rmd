@@ -74,6 +74,32 @@ print(block2ANOVA$ANOVA)
 
 ## Repeat stats on learning curves normalized for rotation size.  
 
+```{r warning=FALSE, message=FALSE}
+nAdaptationDF <- LoadNormReachData()
+
+blockedLCANOVA <- ezANOVA(data=nAdaptationDF, dv=meanDeviation, wid=participant, 
+                         within=.(block), between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+blockedLCANOVA$ANOVA$p <-format(round(blockedLCANOVA$ANOVA$p, 3), nsmall = 2)
+blockedLCANOVA$ANOVA$F <-format(round(blockedLCANOVA$ANOVA$F, 4), nsmall = 2)
+print(blockedLCANOVA$ANOVA)
+
+block1DF <- nAdaptationDF[nAdaptationDF$block == "block1", ]
+block1ANOVA <- ezANOVA(data=block1DF, dv=meanDeviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+block1ANOVA$ANOVA$p <-format(round(block1ANOVA$ANOVA$p, 3), nsmall = 2)
+block1ANOVA$ANOVA$F <-format(round(block1ANOVA$ANOVA$F, 4), nsmall = 2)
+print(block1ANOVA$ANOVA)
+
+block2DF <- nAdaptationDF[nAdaptationDF$block == "block2", ]
+block2ANOVA <- ezANOVA(data=block2DF, dv=meanDeviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+block2ANOVA$ANOVA$p <-format(round(block2ANOVA$ANOVA$p, 3), nsmall = 2)
+block2ANOVA$ANOVA$F <-format(round(block2ANOVA$ANOVA$F, 4), nsmall = 2)
+print(block2ANOVA$ANOVA)
+```
 ***
 
 # Reach After Effects
