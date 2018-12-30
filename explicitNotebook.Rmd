@@ -28,8 +28,10 @@ adaptationDF <- LoadReachData()
 
 
 First, we should see if people learn.  
+dv = 'meanDeviation'; deviation is angular error of the hand with respect to target direction. meanDeviation is a mean of 3 angular errors (one from each trial that makes up the 'trial set'/'block')  
+adaptation data is __baseline corrected__.  
 
-## Effects of instruction and rotation size on learning
+## Does providing instruction and the rotation size affect learning?
 Second, we look for effects of instruction or rotation size on block by block learning (called "trial sets" in the manuscript; 3 trials each).  
 
 ```{r warning=FALSE}
@@ -114,11 +116,10 @@ afterEffectsDF <- LoadAEData()
 withoutStratAEDF <- LoadAEData_NoBLCorr()
 ```
 
-## Analysis of variance
+## Are implicit aftereffects seen after adaptation? Are they modulated by instruction or rotation size?
 
 First, we confirm that adaptation led to after effects. When we compare open-loop reaches where participants don't conciously employ a strategy, they should perform differently in the 'Rotated' session when compared to the 'Aligned' session.  
 
-__Note: we are just interested in the main effect of session. Should this even include instruction and rotation size?__
 
 ```{r warning=FALSE}
 sessionAEAOV <- ezANOVA(data=withoutStratAEDF, dv=reachAE, wid=participant, 
@@ -128,7 +129,7 @@ sessionAEAOV$ANOVA$p <-format(round(sessionAEAOV$ANOVA$p, 3), nsmall = 2)
 sessionAEAOV$ANOVA$F <-format(round(sessionAEAOV$ANOVA$F, 4), nsmall = 2)
 print(sessionAEAOV$ANOVA)
 ```
-Note that there are no session x intruction or session x rotation size interactions -- all groups had similar implicit afteffects.
+__Result: Yes, there are implicit aftereffects after adaptation (main effect of session). No, they are not modulated by instruction or rotation size (no instruction:session, or rotationSize:session interactions).__  
 
 After confirming the presense of aftereffects, we test if instructions/rotation size brought about explicit learning.
 We perform an ANOVA with rotation size and instruction type as between-subject factors, and strategy use (employing or not employing a strategy when reacing) as a within-subject factor.
@@ -171,11 +172,85 @@ t.test(subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 6
 
 ```
 
-__Only the non-instructed 30° group did not show significantly different angular deviations when including a strategy.__
+__Result: Only the non-instructed 30° group did not show significantly different angular deviations when including a strategy.__
 
 ***
 
 # Hand Localization
+
+## Import localization data
+dv = 'deviation'; the angular error between the real and indicated hand position.  
+locDF deviations are __baseline corrected__, whereas deviations in sessionLocDF are not. 
+
+```{r}
+sessionLocDF <- LoadSessionLocData()
+locDF <- LoadLocData()
+```
+
+## Does localization change due to adaptation? Is this change modulated by the type of movement being localized?
+First we test if hand localization is different in the 'rotated session'.  
+__Data is pooled here, so should it also be pooled for the aftereffects? That is, not using the rotation size and instruction as factors. Does this effect F values??  __
+
+2x2 ANOVA testing effects of the session (aligned vs rotated) and movement type (active vs passive) prior to localization.
+```{r warning=FALSE, message=FALSE}
+sessionLocANOVA <- ezANOVA(data=sessionLocDF, dv=deviation, wid=participant, 
+                         within=.(session, movementType), 
+                         return_aov=TRUE, type=3)
+sessionLocANOVA$ANOVA$p <-format(round(sessionLocANOVA$ANOVA$p, 3), nsmall = 2)
+sessionLocANOVA$ANOVA$F <-format(round(sessionLocANOVA$ANOVA$F, 4), nsmall = 2)
+print(sessionLocANOVA$ANOVA)
+
+```
+__Result: localization does change after training (main effect session), this change is effected by the type of localization (session:movementType interaction)__
+
+## Are changes in active localization, passive localization, and predicted consequences changes (active - passive), affected by instruction or rotationsize?
+
+2x2 ANOVAs; we use baseline corrected data and look for main effects of instruction and rotation size.
+
+```{r warning=FALSE, message=FALSE}
+activeLocANOVA <- ezANOVA(data=locDF[locDF$movementType == 'active', ], dv=deviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+activeLocANOVA$ANOVA$p <-format(round(activeLocANOVA$ANOVA$p, 3), nsmall = 2)
+activeLocANOVA$ANOVA$F <-format(round(activeLocANOVA$ANOVA$F, 4), nsmall = 2)
+print(activeLocANOVA$ANOVA)
+
+```
+__Result: active changes aren't affected.  __
+
+```{r warning=FALSE, message=FALSE}
+passiveLocANOVA <- ezANOVA(data=locDF[locDF$movementType == 'passive', ], dv=deviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+passiveLocANOVA$ANOVA$p <-format(round(passiveLocANOVA$ANOVA$p, 3), nsmall = 2)
+passiveLocANOVA$ANOVA$F <-format(round(passiveLocANOVA$ANOVA$F, 4), nsmall = 2)
+print(passiveLocANOVA$ANOVA)
+
+```
+__Result: passive changes are strange, no main effect, but the differences between 30 and 60-degree groups are mudulated by providing instuction.  __
+
+
+```{r warning=FALSE, message=FALSE}
+# Make predicted localization data frame
+predictedLocDF <- locDF[locDF$movementType == 'passive', c("participant", "instruction", "reachAngle", "rotationSize")]
+predictedLocDF<- cbind(predictedLocDF, 
+                       locDF[locDF$movementType == 'active', "deviation"] - locDF[locDF$movementType == 'passive', "deviation"])
+colnames(predictedLocDF)[5] <- 'deviation'
+
+
+predictedLocANOVA <- ezANOVA(data=predictedLocDF, dv=deviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+predictedLocANOVA$ANOVA$p <-format(round(predictedLocANOVA$ANOVA$p, 3), nsmall = 2)
+predictedLocANOVA$ANOVA$F <-format(round(predictedLocANOVA$ANOVA$F, 4), nsmall = 2)
+print(predictedLocANOVA$ANOVA)
+
+```
+__Result: changes in predicted consequences of movement aren't affected.  __
+
+
+# Pearson correlations between implicit localization and afereffects 
+
 
 ***
 

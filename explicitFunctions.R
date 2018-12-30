@@ -191,7 +191,7 @@ LoadLocData <- function() {
   all30Taps <- Reduce(function(x, y) merge(x, y, all=TRUE), list(imp30Taps, exp30Taps))
   
   # reshape needs funky column names in the form: characters.number, for columns that need to be merged::
-  colnames(all30Taps) <- c('deviation.50', 'deviation.90', 'deviation.130', 'reachType', 'participant', 'instruction')
+  colnames(all30Taps) <- c('deviation.50', 'deviation.90', 'deviation.130', 'movementType', 'participant', 'instruction')
   
   # reshape the plots so that ALL dependent variables are in one column (deviation for Tap data)
   all30Taps <- reshape(all30Taps, direction="long", varying=c('deviation.50', 'deviation.90', 'deviation.130'), timevar='reachAngle', v.names='deviation', times=c('50', '90', '130'))
@@ -203,7 +203,7 @@ LoadLocData <- function() {
   #make the independent column a factor (see what factor does..)
   all30Taps$reachAngle <- factor(all30Taps$reachAngle, levels=c('50', '90', '130'))
   all30Taps$instruction <- factor(all30Taps$instruction, levels=c('instructed', 'non-instructed'))
-  all30Taps$reachType <- factor(all30Taps$reachType, levels=c('active', 'passive'))
+  all30Taps$movementType <- factor(all30Taps$movementType, levels=c('active', 'passive'))
   
   
   #load 60
@@ -222,7 +222,7 @@ LoadLocData <- function() {
   all60Taps <- Reduce(function(x, y) merge(x, y, all=TRUE), list(imp60Taps, exp60Taps))
   
   # reshape needs funky column names in the form: characters.number, for columns that need to be merged::
-  colnames(all60Taps) <- c('deviation.50', 'deviation.90', 'deviation.130', 'reachType', 'participant', 'instruction')
+  colnames(all60Taps) <- c('deviation.50', 'deviation.90', 'deviation.130', 'movementType', 'participant', 'instruction')
   
   # reshape the plots so that ALL dependent variables are in one column (deviation for Tap data)
   all60Taps <- reshape(all60Taps, direction="long", varying=c('deviation.50', 'deviation.90', 'deviation.130'), timevar='reachAngle', v.names='deviation', times=c('50', '90', '130'))
@@ -234,7 +234,7 @@ LoadLocData <- function() {
   #make the independent column a factor (see what factor does..)
   all60Taps$reachAngle <- factor(all60Taps$reachAngle, levels=c('50', '90', '130'))
   all60Taps$instruction <- factor(all60Taps$instruction, levels=c('instructed', 'non-instructed'))
-  all60Taps$reachType <- factor(all60Taps$reachType, levels=c('active', 'passive'))
+  all60Taps$movementType <- factor(all60Taps$movementType, levels=c('active', 'passive'))
   
   #remove rows with Nans
   all30Taps <- all30Taps[complete.cases(all30Taps), ]
@@ -248,12 +248,12 @@ LoadLocData <- function() {
   
   allTaps$reachAngle <- factor(allTaps$reachAngle, levels=c('50', '90', '130'))
   allTaps$instruction <- factor(allTaps$instruction, levels=c('instructed', 'non-instructed'))
-  allTaps$reachType <- factor(allTaps$reachType, levels=c('active', 'passive'))
+  allTaps$movementType <- factor(allTaps$movementType, levels=c('active', 'passive'))
   allTaps$rotationSize <- factor(allTaps$rotationSize, levels=c('30', '60'))
   # #ANOVA
-  # all30AOV <- ezANOVA(data=all30Taps, dv=deviation, wid=participant, within=reachType, between=instruction, return_aov=TRUE, type=2)
+  # all30AOV <- ezANOVA(data=all30Taps, dv=deviation, wid=participant, within=movementType, between=instruction, return_aov=TRUE, type=2)
   # print(all30AOV)
-  # all60AOV <- ezANOVA(data=all60Taps, dv=deviation, wid=participant, within=reachType, between=instruction, return_aov=TRUE, type=2)
+  # all60AOV <- ezANOVA(data=all60Taps, dv=deviation, wid=participant, within=movementType, between=instruction, return_aov=TRUE, type=2)
   # print(all60AOV)
   
   return(allTaps)
@@ -334,7 +334,7 @@ LoadSessionLocData <- function() {
   allTaps <- Reduce(function(x, y) merge(x, y, all=TRUE), list(all30Taps_a, all60Taps_a, all30Taps_r, all60Taps_r))
   
   # reshape needs funky column names in the form: characters.number, for columns that need to be merged::
-  colnames(allTaps) <- c('deviation.50', 'deviation.90', 'deviation.130', 'reachType', 'participant', 'instruction', 'session', 'rotationSize')
+  colnames(allTaps) <- c('deviation.50', 'deviation.90', 'deviation.130', 'movementType', 'participant', 'instruction', 'session', 'rotationSize')
   
   # reshape the plots so that ALL dependent variables are in one column (deviation for Tap data)
   allTaps <- reshape(allTaps, direction="long", varying=c('deviation.50', 'deviation.90', 'deviation.130'), timevar='reachAngle', v.names='deviation', times=c('50', '90', '130'))
@@ -346,7 +346,7 @@ LoadSessionLocData <- function() {
   #make the independent column a factor (see what factor does..)
   allTaps$reachAngle <- factor(allTaps$reachAngle, levels=c('50', '90', '130'))
   allTaps$instruction <- factor(allTaps$instruction, levels=c('instructed', 'non-instructed'))
-  allTaps$reachType <- factor(allTaps$reachType, levels=c('active', 'passive'))
+  allTaps$movementType <- factor(allTaps$movementType, levels=c('active', 'passive'))
   allTaps$rotationSize <- factor(allTaps$rotationSize, levels=c('30', '60'))
   allTaps$session <- factor(allTaps$session, levels=c('aligned', 'rotated'))
   
