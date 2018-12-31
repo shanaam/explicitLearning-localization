@@ -60,7 +60,7 @@ print(block1ANOVA$ANOVA)
 ```
 
 
-## Main effects of instruction or rotation size in block 1 
+## Main effects of instruction or rotation size in block 2
 
 2x2 ANOVA
 ```{r warning=FALSE, message=FALSE}
@@ -250,6 +250,33 @@ __Result: changes in predicted consequences of movement aren't affected.  __
 
 
 # Pearson correlations between implicit localization and afereffects 
+
+## Load data
+
+```{r}
+locAwareDF <- LoadLocAwareData()
+```
+
+## Are changes in localization correlated with changes observed in open-loop reaches?
+
+Pearson correlations
+```{r}
+cor.test(locAwareDF$exclusive, locAwareDF$prop_means)
+
+```
+__Afferent-based changes in localization and reach aftereffects when excluding a strategy are correlated__
+
+
+```{r}
+cor.test(locAwareDF$inclusive, locAwareDF$prop_means)
+cor.test(locAwareDF$exclusive, locAwareDF$pred_means)
+cor.test(locAwareDF$inclusive, locAwareDF$pred_means)
+
+```
+
+# What about awareness scores?
+
+
 
 
 ***

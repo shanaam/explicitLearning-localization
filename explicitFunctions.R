@@ -174,7 +174,7 @@ LoadImplicitAEData <- function() {
 }
 
 
-#Localization data
+# Localization data
 LoadLocData <- function() {
   exp30actTap <- read.csv('data/exp30_activeTapData.csv')
   imp30actTap <- read.csv('data/imp30_activeTapData.csv')
@@ -354,6 +354,8 @@ LoadSessionLocData <- function() {
   return(allTaps)
 }
 
+
+# Means and such
 LoadLocAwareData <- function() {
   imp30LA <- read.csv('data/imp30_locAwareness.csv')
   exp30LA <- read.csv('data/exp30_locAwareness.csv')
