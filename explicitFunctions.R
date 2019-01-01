@@ -384,7 +384,8 @@ LoadLocAwareData <- function() {
   
   allLA$instruction <- factor(allLA$instruction, levels=c('instructed', 'non-instructed'))
   allLA$rotationSize <- factor(allLA$rotationSize, levels=c('30', '60'))
-  
+  allLA$awareness_score <- factor(allLA$awareness_score, levels=c('0', '1', '2', '3'))
+
   
   return (allLA)
 }

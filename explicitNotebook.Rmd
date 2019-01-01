@@ -276,8 +276,36 @@ cor.test(locAwareDF$inclusive, locAwareDF$pred_means)
 
 # What about awareness scores?
 
+Are awareness scores affected by instruction? How about rotation size? interaction?
 
+```{r warning=FALSE, message=FALSE}
+ftable(xtabs(~ instruction + rotationSize + awareness_score, data = locAwareDF))
 
+require(MASS) # This is used by ez too
+
+# Proportional Odds Logistic Regression
+m <- polr(awareness_score ~ instruction + rotationSize, data = locAwareDF, Hess=TRUE)
+
+## view a summary of the model
+summary(m)
+
+## store table
+ctable <- coef(summary(m))
+
+## calculate and store p values
+p <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
+
+## combined table
+ctable <- cbind(ctable, "p value" = p)
+ci <- confint(m) # default method gives profiled CIs
+
+confint.default(m) # CIs assuming normality
+
+## OR and CI
+exp(cbind(OR = coef(m), ci))
+
+```
+__Result: No clue...  __
 
 ***
 
