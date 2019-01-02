@@ -150,25 +150,55 @@ T-tests are conducted (4 t-tests, one for each group), comparing aftereffects wh
 
 Non-instructed 30° group
 ```{r}
-t.test(subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'with'), select = reachAE ))
+t.test(subset(afterEffectsDF, 
+              (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'without'), 
+              select = reachAE ), 
+       subset(afterEffectsDF, 
+              (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'with'), 
+              select = reachAE ))
+
+sd(afterEffectsDF[(afterEffectsDF$instruction == 'non-instructed') 
+                  & (afterEffectsDF$rotationSize == 30) 
+                  & (afterEffectsDF$stratUse == 'without'), 
+                  'reachAE'])
+
+sd(afterEffectsDF[(afterEffectsDF$instruction == 'non-instructed') 
+                  & (afterEffectsDF$rotationSize == 30) 
+                  & (afterEffectsDF$stratUse == 'with'), 
+                  'reachAE'])
 
 ```
 
 Instructed 30° group
 ```{r}
-t.test(subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 30) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 30) & (stratUse == 'with'), select = reachAE ))
+t.test(subset(afterEffectsDF,
+              (instruction == 'instructed') & (rotationSize == 30) & (stratUse == 'without'),
+              select = reachAE ), 
+       subset(afterEffectsDF, 
+              (instruction == 'instructed') & (rotationSize == 30) & (stratUse == 'with'), 
+              select = reachAE ))
 
 ```
 
 Non-instructed 60° group
 ```{r}
-t.test(subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 60) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 60) & (stratUse == 'with'), select = reachAE ))
+t.test(subset(afterEffectsDF, 
+              (instruction == 'non-instructed') & (rotationSize == 60) & (stratUse == 'without'), 
+              select = reachAE ), 
+       subset(afterEffectsDF,
+              (instruction == 'non-instructed') & (rotationSize == 60) & (stratUse == 'with'), 
+              select = reachAE ))
 
 ```
 
 Instructed 60° group
 ```{r}
-t.test(subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 60) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'instructed') & (rotationSize == 60) & (stratUse == 'with'), select = reachAE ))
+t.test(subset(afterEffectsDF, 
+              (instruction == 'instructed') & (rotationSize == 60) & (stratUse == 'without'), 
+              select = reachAE ), 
+       subset(afterEffectsDF, 
+              (instruction == 'instructed') & (rotationSize == 60) & (stratUse == 'with'), 
+              select = reachAE ))
 
 ```
 
