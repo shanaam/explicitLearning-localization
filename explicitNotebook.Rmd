@@ -20,79 +20,99 @@ adaptationDF <- LoadReachData()
 
 
 First, we should see if people learn.  
-dv = 'meanDeviation'; deviation is angular error of the hand with respect to target direction. meanDeviation is a mean of 3 angular errors (one from each trial that makes up the 'trial set'/'block')  
+dv = 'meanDeviation'; deviation is angular error of the hand with respect to target direction. meanDeviation is a mean of 3 angular errors (one from each trial that makes up the 'trial set')  
 adaptation data is __baseline corrected__.  
 
 ## Does providing instruction and the rotation size affect learning?
-Second, we look for effects of instruction or rotation size on block by block learning (called "trial sets" in the manuscript; 3 trials each).  
+Second, we look for effects of instruction or rotation size on trialSet by trialSet learning (called "trial sets" in the manuscript; 3 trials each).  
 
 ```{r warning=FALSE}
-blockedLCANOVA <- ezANOVA(data=adaptationDF, dv=meanDeviation, wid=participant, 
-                         within=.(block), between=.(instruction, rotationSize), 
+trialSetLCANOVA <- ezANOVA(data=adaptationDF, dv=meanDeviation, wid=participant, 
+                         within=.(trialSet), between=.(instruction, rotationSize), 
                          return_aov=TRUE, type=3)
-blockedLCANOVA$ANOVA$p <-format(round(blockedLCANOVA$ANOVA$p, 3), nsmall = 2)
-blockedLCANOVA$ANOVA$F <-format(round(blockedLCANOVA$ANOVA$F, 4), nsmall = 2)
-print(blockedLCANOVA$ANOVA)
+trialSetLCANOVA$ANOVA$p <-format(round(trialSetLCANOVA$ANOVA$p, 3), nsmall = 2)
+trialSetLCANOVA$ANOVA$F <-format(round(trialSetLCANOVA$ANOVA$F, 4), nsmall = 2)
+print(trialSetLCANOVA$ANOVA)
 ```
-__Note: does the main effect of block here tell us that there is learning?  __
-The interactions on rows 6 and 7 tell us that both instruction and rotation size interact with block by block learning.  
+__Note: does the main effect of trialSet here tell us that there is learning?  __
+The interactions on rows 6 and 7 tell us that both instruction and rotation size interact with trialSet by trialSet learning.  
 However, this doesn't tell us where the interaction lies; Tukey's can tell us where, OR... 
 
-## Main effects of instruction or rotation size in block 1 
+## Main effects of instruction or rotation size in trialSet 1 
 
 2x2 ANOVA
 ```{r warning=FALSE, message=FALSE}
-block1DF <- adaptationDF[adaptationDF$block == "block1", ]
-block1ANOVA <- ezANOVA(data=block1DF, dv=meanDeviation, wid=participant, 
+trialSetDF <- adaptationDF[adaptationDF$trialSet == "trialSet1", ]
+trialSetANOVA <- ezANOVA(data=trialSetDF, dv=meanDeviation, wid=participant, 
                          between=.(instruction, rotationSize), 
                          return_aov=TRUE, type=3)
-block1ANOVA$ANOVA$p <-format(round(block1ANOVA$ANOVA$p, 3), nsmall = 2)
-block1ANOVA$ANOVA$F <-format(round(block1ANOVA$ANOVA$F, 4), nsmall = 2)
-print(block1ANOVA$ANOVA)
+trialSetANOVA$ANOVA$p <-format(round(trialSetANOVA$ANOVA$p, 3), nsmall = 2)
+trialSetANOVA$ANOVA$F <-format(round(trialSetANOVA$ANOVA$F, 4), nsmall = 2)
+print(trialSetANOVA$ANOVA)
 ```
 
 
-## Main effects of instruction or rotation size in block 2
+## Main effects of instruction or rotation size in trialSet 2
 
 2x2 ANOVA
 ```{r warning=FALSE, message=FALSE}
-block2DF <- adaptationDF[adaptationDF$block == "block2", ]
-block2ANOVA <- ezANOVA(data=block2DF, dv=meanDeviation, wid=participant, 
+trialSetDF <- adaptationDF[adaptationDF$trialSet == "trialSet2", ]
+trialSetANOVA <- ezANOVA(data=trialSetDF, dv=meanDeviation, wid=participant, 
                          between=.(instruction, rotationSize), 
                          return_aov=TRUE, type=3)
-block2ANOVA$ANOVA$p <-format(round(block2ANOVA$ANOVA$p, 3), nsmall = 2)
-block2ANOVA$ANOVA$F <-format(round(block2ANOVA$ANOVA$F, 4), nsmall = 2)
-print(block2ANOVA$ANOVA)
+trialSetANOVA$ANOVA$p <-format(round(trialSetANOVA$ANOVA$p, 3), nsmall = 2)
+trialSetANOVA$ANOVA$F <-format(round(trialSetANOVA$ANOVA$F, 4), nsmall = 2)
+print(trialSetANOVA$ANOVA)
 ```
 
+## Main effects of instruction or rotation size in the final trialSet (9 trials)
+
+2x2 ANOVA
+```{r warning=FALSE, message=FALSE}
+trialSetDF <- adaptationDF[adaptationDF$trialSet == "finaltrialSet", ]
+trialSetANOVA <- ezANOVA(data=trialSetDF, dv=meanDeviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+trialSetANOVA$ANOVA$p <-format(round(trialSetANOVA$ANOVA$p, 3), nsmall = 2)
+trialSetANOVA$ANOVA$F <-format(round(trialSetANOVA$ANOVA$F, 4), nsmall = 2)
+print(trialSetANOVA$ANOVA)
+```
 
 ## Repeat stats on learning curves normalized for rotation size.  
 
 ```{r warning=FALSE, message=FALSE}
 nAdaptationDF <- LoadNormReachData()
 
-blockedLCANOVA <- ezANOVA(data=nAdaptationDF, dv=meanDeviation, wid=participant, 
-                         within=.(block), between=.(instruction, rotationSize), 
+trialSetLCANOVA <- ezANOVA(data=nAdaptationDF, dv=meanDeviation, wid=participant, 
+                         within=.(trialSet), between=.(instruction, rotationSize), 
                          return_aov=TRUE, type=3)
-blockedLCANOVA$ANOVA$p <-format(round(blockedLCANOVA$ANOVA$p, 3), nsmall = 2)
-blockedLCANOVA$ANOVA$F <-format(round(blockedLCANOVA$ANOVA$F, 4), nsmall = 2)
-print(blockedLCANOVA$ANOVA)
+trialSetLCANOVA$ANOVA$p <-format(round(trialSetLCANOVA$ANOVA$p, 3), nsmall = 2)
+trialSetLCANOVA$ANOVA$F <-format(round(trialSetLCANOVA$ANOVA$F, 4), nsmall = 2)
+print(trialSetLCANOVA$ANOVA)
 
-block1DF <- nAdaptationDF[nAdaptationDF$block == "block1", ]
-block1ANOVA <- ezANOVA(data=block1DF, dv=meanDeviation, wid=participant, 
+trialSetDF <- nAdaptationDF[nAdaptationDF$trialSet == "trialSet1", ]
+trialSetANOVA <- ezANOVA(data=trialSetDF, dv=meanDeviation, wid=participant, 
                          between=.(instruction, rotationSize), 
                          return_aov=TRUE, type=3)
-block1ANOVA$ANOVA$p <-format(round(block1ANOVA$ANOVA$p, 3), nsmall = 2)
-block1ANOVA$ANOVA$F <-format(round(block1ANOVA$ANOVA$F, 4), nsmall = 2)
-print(block1ANOVA$ANOVA)
+trialSetANOVA$ANOVA$p <-format(round(trialSetANOVA$ANOVA$p, 3), nsmall = 2)
+trialSetANOVA$ANOVA$F <-format(round(trialSetANOVA$ANOVA$F, 4), nsmall = 2)
+print(trialSetANOVA$ANOVA)
 
-block2DF <- nAdaptationDF[nAdaptationDF$block == "block2", ]
-block2ANOVA <- ezANOVA(data=block2DF, dv=meanDeviation, wid=participant, 
+trialSetDF <- nAdaptationDF[nAdaptationDF$trialSet == "trialSet2", ]
+trialSetANOVA <- ezANOVA(data=trialSetDF, dv=meanDeviation, wid=participant, 
                          between=.(instruction, rotationSize), 
                          return_aov=TRUE, type=3)
-block2ANOVA$ANOVA$p <-format(round(block2ANOVA$ANOVA$p, 3), nsmall = 2)
-block2ANOVA$ANOVA$F <-format(round(block2ANOVA$ANOVA$F, 4), nsmall = 2)
-print(block2ANOVA$ANOVA)
+trialSetANOVA$ANOVA$p <-format(round(trialSetANOVA$ANOVA$p, 3), nsmall = 2)
+trialSetANOVA$ANOVA$F <-format(round(trialSetANOVA$ANOVA$F, 4), nsmall = 2)
+print(trialSetANOVA$ANOVA)
+
+trialSetDF <- nAdaptationDF[nAdaptationDF$trialSet == "finaltrialSet", ]
+trialSetANOVA <- ezANOVA(data=trialSetDF, dv=meanDeviation, wid=participant, 
+                         between=.(instruction, rotationSize), 
+                         return_aov=TRUE, type=3)
+trialSetANOVA$ANOVA$p <-format(round(trialSetANOVA$ANOVA$p, 3), nsmall = 2)
+trialSetANOVA$ANOVA$F <-format(round(trialSetANOVA$ANOVA$F, 4), nsmall = 2)
+print(trialSetANOVA$ANOVA)
 ```
 ***
 

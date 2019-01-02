@@ -14,17 +14,17 @@ LoadReachData <- function() {
   curves$block4mean <- NULL
   
   # reshape needs funky column names in the form: characters.number, for columns that need to be merged::
-  colnames(curves) <- c('participant', 'block1.1', 'block2.2', 'blockFinal.3', 'instruction', 'rotationSize')
+  colnames(curves) <- c('participant', 'trialSet1.1', 'trialSet2.2', 'trialSetFinal.3', 'instruction', 'rotationSize')
   
   # reshape the plots so that ALL dependent variables are in one column (deviation for Tap data)
-  curves <- reshape(curves, direction="long", varying=c('block1.1', 'block2.2', 'blockFinal.3'), timevar='block', v.names='meanDeviation', times=c('block1', 'block2', 'finalblock'))
+  curves <- reshape(curves, direction="long", varying=c('trialSet1.1', 'trialSet2.2', 'trialSetFinal.3'), timevar='trialSet', v.names='meanDeviation', times=c('trialSet1', 'trialSet2', 'finaltrialSet'))
   
   # get rid of the id column and rownames after reshaping
   curves$id <- NULL
   rownames(curves) <- NULL
   
   #make the independent column a factor (see what factor does..)
-  curves$block <- factor(curves$block, levels=c('block1', 'block2', 'finalblock'))
+  curves$trialSet <- factor(curves$trialSet, levels=c('trialSet1', 'trialSet2', 'finaltrialSet'))
   curves$instruction <- factor(curves$instruction, levels=c('instructed', 'non-instructed'))
   curves$rotationSize <- factor(curves$rotationSize, levels=c('30', '60'))
 
@@ -38,17 +38,17 @@ LoadNormReachData <- function() {
   curves$block4mean <- NULL
   
   # reshape needs funky column names in the form: characters.number, for columns that need to be merged::
-  colnames(curves) <- c('participant', 'block1.1', 'block2.2', 'blockFinal.3', 'instruction', 'rotationSize')
+  colnames(curves) <- c('participant', 'trialSet1.1', 'trialSet2.2', 'trialSetFinal.3', 'instruction', 'rotationSize')
   
   # reshape the plots so that ALL dependent variables are in one column (deviation for Tap data)
-  curves <- reshape(curves, direction="long", varying=c('block1.1', 'block2.2', 'blockFinal.3'), timevar='block', v.names='meanDeviation', times=c('block1', 'block2', 'finalblock'))
+  curves <- reshape(curves, direction="long", varying=c('trialSet1.1', 'trialSet2.2', 'trialSetFinal.3'), timevar='trialSet', v.names='meanDeviation', times=c('trialSet1', 'trialSet2', 'finaltrialSet'))
   
   # get rid of the id column and rownames after reshaping
   curves$id <- NULL
   rownames(curves) <- NULL
   
   #make the independent column a factor (see what factor does..)
-  curves$block <- factor(curves$block, levels=c('block1', 'block2', 'finalblock'))
+  curves$trialSet <- factor(curves$trialSet, levels=c('trialSet1', 'trialSet2', 'finaltrialSet'))
   curves$instruction <- factor(curves$instruction, levels=c('instructed', 'non-instructed'))
   curves$rotationSize <- factor(curves$rotationSize, levels=c('30', '60'))
 
