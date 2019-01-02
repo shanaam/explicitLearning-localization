@@ -481,6 +481,7 @@ sample estimates:
 mean of x mean of y 
  14.42489  16.43670 </code></pre>
 <!-- rnb-output-end -->
+<<<<<<< HEAD
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2QoYWZ0ZXJFZmZlY3RzREZbKGFmdGVyRWZmZWN0c0RGJGluc3RydWN0aW9uID09ICdub24taW5zdHJ1Y3RlZCcpIFxuICAgICAgICAgICAgICAgICAgJiAoYWZ0ZXJFZmZlY3RzREYkcm90YXRpb25TaXplID09IDMwKSBcbiAgICAgICAgICAgICAgICAgICYgKGFmdGVyRWZmZWN0c0RGJHN0cmF0VXNlID09ICd3aXRob3V0JyksIFxuICAgICAgICAgICAgICAgICAgJ3JlYWNoQUUnXSlcbmBgYCJ9 -->
 <pre class="r"><code>sd(afterEffectsDF[(afterEffectsDF$instruction == 'non-instructed') 
                   &amp; (afterEffectsDF$rotationSize == 30) 
@@ -498,6 +499,16 @@ mean of x mean of y
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDcuNTc3NzY3XG4ifQ== -->
 <pre><code>[1] 7.577767</code></pre>
+=======
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2Qoc3Vic2V0KGFmdGVyRWZmZWN0c0RGLCBcbiAgICAgICAgICAgICAgKGluc3RydWN0aW9uID09ICdub24taW5zdHJ1Y3RlZCcpICYgKHJvdGF0aW9uU2l6ZSA9PSAzMCkgJiAoc3RyYXRVc2UgPT0gJ3dpdGhvdXQnKSwgXG4gICAgICAgICAgICAgIHNlbGVjdCA9IHJlYWNoQUUgKSlcbmBgYCJ9 -->
+<pre class="r"><code>sd(subset(afterEffectsDF, 
+              (instruction == 'non-instructed') &amp; (rotationSize == 30) &amp; (stratUse == 'without'), 
+              select = reachAE ))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gaXMuZGF0YS5mcmFtZSh4KSA6IFxuICAobGlzdCkgb2JqZWN0IGNhbm5vdCBiZSBjb2VyY2VkIHRvIHR5cGUgJ2RvdWJsZSdcbiJ9 -->
+<pre><code>Error in is.data.frame(x) : 
+  (list) object cannot be coerced to type 'double'</code></pre>
+>>>>>>> 2351c904bf67d6e3637bc82c7333a6ea4a4003ec
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
