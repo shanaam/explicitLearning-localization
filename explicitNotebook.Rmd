@@ -318,7 +318,21 @@ cor.test(locAwareDF$inclusive, locAwareDF$pred_means)
 
 # What about awareness scores?
 
-Are awareness scores affected by instruction? How about rotation size? interaction?
+Spearman's correlation.
+```{r}
+cor.test(locAwareDF$prop_means, as.integer(locAwareDF$awareness_score), method = "spearman")
+cor.test(locAwareDF$pred_means, as.integer(locAwareDF$awareness_score), method = "spearman")
+
+cor.test(locAwareDF$inclusive, as.integer(locAwareDF$awareness_score), method = "spearman")
+cor.test(locAwareDF[locAwareDF$instruction == 'non-instructed', ]$inclusive,
+         as.integer(locAwareDF[locAwareDF$instruction == 'non-instructed', ]$awareness_score), 
+         method = "spearman")
+
+```
+
+
+
+Are awareness scores affected by instruction? How about rotation size?
 
 ```{r warning=FALSE, message=FALSE}
 ftable(xtabs(~ instruction + rotationSize + awareness_score, data = locAwareDF))
@@ -339,6 +353,9 @@ p <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
 
 ## combined table
 ctable <- cbind(ctable, "p value" = p)
+ctable
+
+
 ci <- confint(m) # default method gives profiled CIs
 
 confint.default(m) # CIs assuming normality
@@ -347,7 +364,22 @@ confint.default(m) # CIs assuming normality
 exp(cbind(OR = coef(m), ci))
 
 ```
-__Result: No clue...  __
+__Result: Odds of getting a score of 3 vs 1 or 0 combined is 4.7 times greater when instruction is provided (assuming rotation size is kept constant). Likewise, odds of getting 3 or 1 is 4.7 times greater when instruction is provided (over getting 0).  __
+
+__Instruction, but not rotation size affects the odds of getting a higher awareness score__
+
+
+
+
+***
+# Plots
+
+```{python}
+
+```
+
+
+
 
 ***
 
