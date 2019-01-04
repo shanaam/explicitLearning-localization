@@ -825,7 +825,7 @@ def makeLocAwarenessCSV (group):
     aeDF.to_csv(group[0:5] + '_locAwareness.csv', header= True, index= False) ## Save explicit stuff
     
 #%% awareness CSV (doesn't neet to be redone unless changes to data files occur)
- 
+
 # makeAwarenessCSV(['imp30/', 'exp30/', 'imp60/', 'exp60/']).to_csv( 'participantAwareness.csv', header= True, index= False)
     
 #%%testing

@@ -364,7 +364,7 @@ confint.default(m) # CIs assuming normality
 exp(cbind(OR = coef(m), ci))
 
 ```
-__Result: Odds of getting a score of 3 vs 1 or 0 combined is 4.7 times greater when instruction is provided (assuming rotation size is kept constant). Likewise, odds of getting 3 or 1 is 4.7 times greater when instruction is provided (over getting 0).  __
+__Result: Odds of getting a score of 3 vs 1 or 0 combined is 5.1 times greater when instruction is provided (assuming rotation size is kept constant). Likewise, odds of getting 3 or 1 is 5.1 times greater when instruction is provided (over getting 0).  __
 
 __Instruction, but not rotation size affects the odds of getting a higher awareness score__
 
