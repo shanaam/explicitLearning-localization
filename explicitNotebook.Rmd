@@ -1,6 +1,8 @@
 ---
 title: "Explicit Learning and Localization Notebook"
-output: html_notebook
+output:
+  html_notebook: default
+  pdf_document: default
 ---
 
 ```{r echo=FALSE}
@@ -340,6 +342,7 @@ cor.test(locAwareDF$inclusive, locAwareDF$pred_means)
 
 Spearman's correlation.
 ```{r}
+
 cor.test(locAwareDF$prop_means, as.integer(locAwareDF$awareness_score), method = "spearman")
 cor.test(locAwareDF$pred_means, as.integer(locAwareDF$awareness_score), method = "spearman")
 

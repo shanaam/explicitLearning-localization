@@ -263,9 +263,7 @@ def plotAwareCorr(LAdata, colours):
     
     fig, ax  = plt.subplots(figsize = (3, 3)) #look this up later..
     
-    for key in LAdata:
-        #ax.scatter(LAdata[key]['awarenessRatio'], LAdata[key]['awareness_score'] + offsets[key], label = key, color = colours[key], marker = '.', linewidths = 0, s = 100, alpha = 0.7)
-        allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
+    allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
         
     
     #replace awareness scores (0,1,3) in allData with ('none', 'low', and 'high')
@@ -280,8 +278,8 @@ def plotAwareCorr(LAdata, colours):
 #    sns.regplot(allData['awareness_score'],  allData['prop_means'],  color = affCol, label = 'Afferent Changes', marker = '.', x_jitter = 0.2, scatter_kws={'linewidths':0, 'alpha':0.4, 's':100})
 #    sns.regplot(allData['awareness_score'],  allData['pred_means'],  color = effCol, label = 'Efferent Changes', marker = '.', x_jitter = 0.2, scatter_kws={'linewidths':0, 'alpha':0.4, 's':100})
  
-    sns.stripplot(x = "awareness_score", y = "prop_means", data = allData, color = affCol, label = 'Afferent Changes', alpha = 0.5, jitter = 0.2 )
-    sns.stripplot(x = "awareness_score", y = "pred_means", data = allData, color = effCol, label = 'Efferent Changes', alpha = 0.5, jitter = 0.2 )
+    sns.stripplot(x = "awareness_score", y = "prop_means", data = allData, color = affCol, order = ['none', 'low', 'high'], label = 'Afferent Changes', alpha = 0.5, jitter = 0.2 )
+    sns.stripplot(x = "awareness_score", y = "pred_means", data = allData, color = effCol, order = ['none', 'low', 'high'], label = 'Efferent Changes', alpha = 0.5, jitter = 0.2 )
 
 #    #legend    
 #    legend = ax.legend(loc = 'upper left', fontsize = 9, labelspacing=0.2)
@@ -311,14 +309,8 @@ def plotAwareCorr(LAdata, colours):
 def propPredVExc(LAdata, colours):
     
     fig, ax  = plt.subplots(figsize = (3, 3)) #look this up later..
-    
-#    ax. axvline(x=0.5, ymin= 0 , ymax= 1, color = '#bababa', linestyle = 'dashed', linewidth = 1)
-#
-    for key in LAdata:
-#        ax.scatter(LAdata[key]['awarenessRatio'], LAdata[key]['awareness_score'] + offsets[key], label = key, color = colours[key], marker = '.')
 
-        #regression line
-        allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
+    allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
 
     sns.regplot(allData['exclusive'],  allData['prop_means'] * -1,  color = affCol, label = 'Afferent Changes', marker = '.', scatter_kws={'linewidths':0, 'alpha':0.7, 's':100})
     sns.regplot(allData['exclusive'],  allData['pred_means'] * -1,  color = effCol, label = 'Efferent Changes', marker = '.', scatter_kws={'linewidths':0, 'alpha':0.7, 's':100})
@@ -356,13 +348,8 @@ def propPredVInc(LAdata, colours):
     
     fig, ax  = plt.subplots(figsize = (3, 3)) #look this up later..
     
-#    ax. axvline(x=0.5, ymin= 0 , ymax= 1, color = '#bababa', linestyle = 'dashed', linewidth = 1)
-#
-    for key in LAdata:
-#        ax.scatter(LAdata[key]['awarenessRatio'], LAdata[key]['awareness_score'] + offsets[key], label = key, color = colours[key], marker = '.')
 
-        #regression line
-        allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
+    allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
 
     sns.regplot(allData['inclusive'],  allData['prop_means'] * -1,  color = affCol, label = 'Afferent Changes', marker = '.', scatter_kws={'linewidths':0, 'alpha':0.7, 's':100})
     sns.regplot(allData['inclusive'],  allData['pred_means'] * -1,  color = effCol, label = 'Efferent Changes', marker = '.', scatter_kws={'linewidths':0, 'alpha':0.7, 's':100})
@@ -400,13 +387,7 @@ def propPredVRatio(LAdata, colours):
     
     fig, ax  = plt.subplots(figsize = (3, 3)) #look this up later..
     
-#    ax. axvline(x=0.5, ymin= 0 , ymax= 1, color = '#bababa', linestyle = 'dashed', linewidth = 1)
-#
-    for key in LAdata:
-#        ax.scatter(LAdata[key]['awarenessRatio'], LAdata[key]['awareness_score'] + offsets[key], label = key, color = colours[key], marker = '.')
-
-        #regression line
-        allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
+    allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
 
     sns.regplot(allData['awarenessRatio'],  allData['prop_means'],  color = affCol, label = 'Afferent Changes', marker = '.', scatter_kws={'linewidths':0, 'alpha':0.7, 's':100})
     sns.regplot(allData['awarenessRatio'],  allData['pred_means'],  color = effCol, label = 'Efferent Changes', marker = '.', scatter_kws={'linewidths':0, 'alpha':0.7, 's':100})
@@ -443,14 +424,7 @@ def propPredVRatio(LAdata, colours):
 def ExcVInc(LAdata, colours):
     
     fig, ax  = plt.subplots(figsize = (3, 3)) #look this up later..
-    
-#    ax. axvline(x=0.5, ymin= 0 , ymax= 1, color = '#bababa', linestyle = 'dashed', linewidth = 1)
-#
-    for key in LAdata:
-#        ax.scatter(LAdata[key]['awarenessRatio'], LAdata[key]['awareness_score'] + offsets[key], label = key, color = colours[key], marker = '.')
-
-        #regression line
-        allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
+    allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
 
     sns.regplot(allData['inclusive'],  allData['exclusive'],  color = 'grey', marker = '.', scatter_kws={'linewidths':0, 'alpha':0.7, 's':100})
        
@@ -481,21 +455,67 @@ def ExcVInc(LAdata, colours):
     plt.savefig('ExcVInc.pdf', dpi = 100, transparency = True)
 
 
+    plt.show()    
+
+
+def plotAwareCorrNonInstructed(LAdata, AEdata, colours):
+    
+    fig, ax  = plt.subplots(figsize = (3, 3)) #look this up later..
+        
+    allData = pd.concat( [AEdata[key] for key in ['NI30', 'NI60']], ignore_index=True)
+    allDataLA = pd.concat( [LAdata[key] for key in ['NI30', 'NI60']], ignore_index=True)
+    
+    allData['awareness_score'] = allDataLA['awareness_score']
+    
+    #replace awareness scores (0,1,3) in allData with ('none', 'low', and 'high')
+    allData['awareness_score'] = allData['awareness_score'].replace(3, 'high')
+    allData['awareness_score'] = allData['awareness_score'].replace(1, 'low')
+    allData['awareness_score'] = allData['awareness_score'].replace(0, 'none')
+ 
+    sns.stripplot(x = "awareness_score", y = "inclusive", data = allData[allData.group == 'NI30'], color = colours['NI30'], order = ['none', 'low', 'high'], label = 'Non-instructed 30°', alpha = 0.6, jitter = 0.2 )
+    sns.stripplot(x = "awareness_score", y = "inclusive", data = allData[allData.group == 'NI60'], color = colours['NI60'], order = ['none', 'low', 'high'], label = 'Non-instructed 60°', alpha = 0.6, jitter = 0.2 )
+
+    #ax
+    ax.set_facecolor('w')
+
+#    ax.set_ylim(-10, 30)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+        
+    ax.set_ylabel('Reach Deviation \nWhen Employing Learned Strategy (°)')
+    ax.set_xlabel('Questionnaire Awareness Score')
+    
+    plt.savefig('awarenessCorrPlotsNoninstructed.pdf', dpi = 100, transparency = True)
+
     plt.show()          
     
 LAdata = {'NI30' : pd.read_csv('imp30_locAwareness.csv'),
-    'I30' : pd.read_csv('exp30_locAwareness.csv'),
-    'NI60' : pd.read_csv('imp60_locAwareness.csv'),
-    'I60' : pd.read_csv('exp60_locAwareness.csv')}
+          'I30' : pd.read_csv('exp30_locAwareness.csv'),
+          'NI60' : pd.read_csv('imp60_locAwareness.csv'),
+          'I60' : pd.read_csv('exp60_locAwareness.csv')}
 colours = {'NI30': imp30col, 'I30': exp30col, 'NI60': imp60col, 'I60': exp60col}
 offsets = {'NI30': 0.30, 'I30': 0.10, 'NI60': -0.10, 'I60': -0.30}
 affCol = '#8c058c'
 effCol = '#067217'
 
+AEdata = {'NI30' : pd.read_csv('imp30_reachAEs_pp.csv'),
+          'I30' : pd.read_csv('exp30_reachAEs_pp.csv'),
+          'NI60' : pd.read_csv('imp60_reachAEs_pp.csv'),
+          'I60' : pd.read_csv('exp60_reachAEs_pp.csv')}
+
+AEdata['NI30']['group'] = 'NI30'
+AEdata['I30']['group'] = 'I30'
+AEdata['NI60']['group'] = 'NI60'
+AEdata['I60']['group'] = 'I60'
+
+
 #plotCorrelations(LAdata, colours)
-plotAwareCorr(LAdata, colours)
+
 propPredVExc(LAdata, colours)
 propPredVInc(LAdata, colours)
+plotAwareCorr(LAdata, colours)
+plotAwareCorrNonInstructed(LAdata, AEdata, colours)
 #propPredVRatio(LAdata, colours)
 #ExcVInc(LAdata, colours)
 

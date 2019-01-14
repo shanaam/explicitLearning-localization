@@ -376,6 +376,9 @@ LoadLocAwareData <- function() {
   all60LA <- Reduce(function(a, b) merge(a, b, all=TRUE), list(imp60LA, exp60LA))
   allLA <- Reduce(function(a, b) merge(a, b, all=TRUE), list(all30LA, all60LA))
   
+  # correct the scores for 3 outcomes (0,1,3 --> 0, 1, 2)
+  allLA$awareness_score[allLA$awareness_score == 3] <- 2
+  
   #get rid of columns we aren't testing
   # allLA$exclusive <- NULL
   # allLA$inclusive <- NULL
@@ -386,7 +389,7 @@ LoadLocAwareData <- function() {
   allLA <- within(allLA, instruction <- relevel(instruction, ref = 'non-instructed'))
   allLA$rotationSize <- factor(allLA$rotationSize, levels=c('30', '60'))
   allLA <- within(allLA, rotationSize <- relevel(rotationSize, ref = '30'))
-  allLA$awareness_score <- factor(allLA$awareness_score, levels=c('0', '1', '3'))
+  allLA$awareness_score <- factor(allLA$awareness_score, levels=c('0', '1', '2'))
 
   
   return (allLA)
