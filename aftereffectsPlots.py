@@ -263,40 +263,48 @@ def plotAwareCorr(LAdata, colours):
     
     fig, ax  = plt.subplots(figsize = (3, 3)) #look this up later..
     
-    ax. axvline(x=0.5, ymin= 0 , ymax= 1, color = '#bababa', linestyle = 'dashed', linewidth = 1)
-
     for key in LAdata:
         #ax.scatter(LAdata[key]['awarenessRatio'], LAdata[key]['awareness_score'] + offsets[key], label = key, color = colours[key], marker = '.', linewidths = 0, s = 100, alpha = 0.7)
         allData = pd.concat( [LAdata[key] for key in LAdata], ignore_index=True)
+        
+    
+    #replace awareness scores (0,1,3) in allData with ('none', 'low', and 'high')
+    allData['awareness_score'] = allData['awareness_score'].replace(3, 'high')
+    allData['awareness_score'] = allData['awareness_score'].replace(1, 'low')
+    allData['awareness_score'] = allData['awareness_score'].replace(0, 'none')
 
-    sns.regplot(allData['awareness_score'],  allData['prop_means'] * -1,  color = affCol, label = 'Afferent Changes', marker = '.', x_jitter = 0.2, scatter_kws={'linewidths':0, 'alpha':0.4, 's':100})
-    sns.regplot(allData['awareness_score'],  allData['pred_means'] * -1,  color = effCol, label = 'Efferent Changes', marker = '.', x_jitter = 0.2, scatter_kws={'linewidths':0, 'alpha':0.4, 's':100})
+    allData['prop_means'] = allData['prop_means'] * -1
+    allData['pred_means'] = allData['pred_means'] * -1
+
+
+#    sns.regplot(allData['awareness_score'],  allData['prop_means'],  color = affCol, label = 'Afferent Changes', marker = '.', x_jitter = 0.2, scatter_kws={'linewidths':0, 'alpha':0.4, 's':100})
+#    sns.regplot(allData['awareness_score'],  allData['pred_means'],  color = effCol, label = 'Efferent Changes', marker = '.', x_jitter = 0.2, scatter_kws={'linewidths':0, 'alpha':0.4, 's':100})
  
-    #legend    
-    legend = ax.legend(loc = 'upper left', fontsize = 9, labelspacing=0.2)
-    legend.get_frame().set_facecolor('none')
-    legend.get_frame().set_linewidth(0.0)
+    sns.stripplot(x = "awareness_score", y = "prop_means", data = allData, color = affCol, label = 'Afferent Changes', alpha = 0.5, jitter = 0.2 )
+    sns.stripplot(x = "awareness_score", y = "pred_means", data = allData, color = effCol, label = 'Efferent Changes', alpha = 0.5, jitter = 0.2 )
+
+#    #legend    
+#    legend = ax.legend(loc = 'upper left', fontsize = 9, labelspacing=0.2)
+#    legend.get_frame().set_facecolor('none')
+#    legend.get_frame().set_linewidth(0.0)
 
     #ax
     ax.set_facecolor('w')
 
-    ax.set_xlim(-1, 4)
+#    ax.set_xlim(-1, 4)
     ax.set_ylim(-10, 30)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.xaxis.set_ticks_position('bottom') 
+#    ax.xaxis.set_ticks_position('bottom') 
     ax.yaxis.set_ticks_position('left')
-    ax.set_xticks([0, 1, 2, 3])
+#    ax.set_xticks([0, 1, 2, 3])
 #    ax.spines['left'].set_bounds(0, 3)
-#    ax.spines['bottom'].set_bounds(0.2, 1)
-    
+#    ax.spines['bottom'].set_bounds(0.2, 1)  
         
     ax.set_ylabel('Changes in Localization (°)')
     ax.set_xlabel('Questionnaire Awareness Score')
-
     
-    plt.savefig('awarenessCorrPlots.pdf', dpi = 100, transparency = True)
-
+    plt.savefig('awarenessCorrPlotsFactors.pdf', dpi = 100, transparency = True)
 
     plt.show()    
 

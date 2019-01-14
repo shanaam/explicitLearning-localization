@@ -156,6 +156,13 @@ aeANOVA$ANOVA$F <-format(round(aeANOVA$ANOVA$F, 4), nsmall = 2)
 print(aeANOVA$ANOVA)
 ```
 
+## Mean implicit aftereffects 
+This is just the mean reach deviation of all open-loop reaches without strategy use
+
+```{r warning=FALSE}
+mean(afterEffectsDF[afterEffectsDF$stratUse == 'without', 'reachAE'])
+```
+
 ## T-tests
 
 T-tests are conducted (4 t-tests, one for each group), comparing aftereffects when using a strategy vs when not using one in the 'Rotated' session.
@@ -271,6 +278,13 @@ print(passiveLocANOVA$ANOVA)
 ```
 __Result: passive changes are strange, no main effect, but the differences between 30 and 60-degree groups are mudulated by providing instuction.  __
 
+### Mean passive localization change:
+
+```{r warning=FALSE, message=FALSE}
+mean(locDF[locDF$movementType == 'passive', 'deviation'])
+
+```
+
 
 ```{r warning=FALSE, message=FALSE}
 # Make predicted localization data frame
@@ -290,6 +304,12 @@ print(predictedLocANOVA$ANOVA)
 ```
 __Result: changes in predicted consequences of movement aren't affected.  __
 
+### Mean passive localization change:
+
+```{r warning=FALSE, message=FALSE}
+mean(predictedLocDF$deviation)
+
+```
 
 # Pearson correlations between implicit localization and afereffects 
 
