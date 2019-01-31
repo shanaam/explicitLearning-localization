@@ -11,7 +11,7 @@ import matplotlib.ticker as ticker
 #%% set working directory
 # os.chdir('c://Users/kineuser/Desktop/Shanaa/exp/explicit/data') #set the working directory AT SCHOOL PC
 #os.chdir('E://Shanaa\'s Stuff/Documents/Shanaa/exp/explicit/data') #set the working directory AT HOME
-os.chdir('D://shanaa/exp/explicit/data') #set the working directory ON LAPTOP
+# os.chdir('D://shanaa/exp/explicit/data') #set the working directory ON LAPTOP
 
 #%% defining some variables
 #set default font for pyplot
@@ -35,15 +35,15 @@ def get_locCI(data):
 def threePointPlot():
 
     #import Data
-    imp30active = pd.read_csv('imp30_activeTapData.csv')
-    exp30active = pd.read_csv('exp30_activeTapData.csv')
-    imp60active = pd.read_csv('imp60_activeTapData.csv')
-    exp60active = pd.read_csv('exp60_activeTapData.csv')
+    imp30active = pd.read_csv('data/imp30_activeTapData.csv')
+    exp30active = pd.read_csv('data/exp30_activeTapData.csv')
+    imp60active = pd.read_csv('data/imp60_activeTapData.csv')
+    exp60active = pd.read_csv('data/exp60_activeTapData.csv')
     
-    imp30passive = pd.read_csv('imp30_passiveTapData.csv')
-    exp30passive = pd.read_csv('exp30_passiveTapData.csv')
-    imp60passive = pd.read_csv('imp60_passiveTapData.csv')
-    exp60passive = pd.read_csv('exp60_passiveTapData.csv')
+    imp30passive = pd.read_csv('data/imp30_passiveTapData.csv')
+    exp30passive = pd.read_csv('data/exp30_passiveTapData.csv')
+    imp60passive = pd.read_csv('data/imp60_passiveTapData.csv')
+    exp60passive = pd.read_csv('data/exp60_passiveTapData.csv')
     
     
     #Data to plot
@@ -213,8 +213,7 @@ def threePointPlot():
     plt.tight_layout() #makes room for the x-axis label
     
     #save and show
-    plt.savefig('localizations_per_pp.pdf', dpi = 100)
-    plt.show()
+    plt.savefig('./plots/localizations_per_pp.pdf', dpi = 100)
     
     
 #==============================================================================

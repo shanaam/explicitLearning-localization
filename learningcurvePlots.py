@@ -10,7 +10,7 @@ from decimal import Decimal
 
 # os.chdir('c://Users/kineuser/Desktop/Shanaa/exp/explicit/data') #set the working directory AT SCHOOL PC
 #os.chdir('E://Shanaa\'s Stuff/Documents/Shanaa/exp/explicit/data') #set the working directory AT HOME
-os.chdir('D://shanaa/exp/explicit/data') #set the working directory ON LAPTOP
+# os.chdir('D://shanaa/exp/explicit/data') #set the working directory ON LAPTOP
 
 #make a df where each column is a participant with first 90 reaches (so it should have 90 rows, and angles should be baseline subtracted!)
 #make a new script for this (preprocessing)
@@ -26,10 +26,10 @@ exp30col = '#ff8000'
 imp30col = '#e51636'
 
 #import learning curve data (medians)
-learningCurveDF60exp = pd.read_csv('exp60_curves.csv') 
-learningCurveDF60imp = pd.read_csv('imp60_curves.csv')
-learningCurveDF30exp = pd.read_csv('exp30_curves.csv') 
-learningCurveDF30imp = pd.read_csv('imp30_curves.csv')
+learningCurveDF60exp = pd.read_csv('data/exp60_curves.csv') 
+learningCurveDF60imp = pd.read_csv('data/imp60_curves.csv')
+learningCurveDF30exp = pd.read_csv('data/exp30_curves.csv') 
+learningCurveDF30imp = pd.read_csv('data/imp30_curves.csv')
 
 #get raw means
 standard60e = learningCurveDF60exp.mean(axis = 1)
@@ -163,8 +163,6 @@ def plotLC(x):
     ax.xaxis.set_ticks_position('bottom') 
     ax.yaxis.set_ticks_position('left') 
     
-    #show
-    plt.show()
     
 #Break in plot
 def plotBrokenLC(x, ci):
@@ -260,8 +258,7 @@ def plotBrokenLC(x, ci):
         ax2.set_ylim(-10, 70)
 
     #save figure show
-    plt.savefig(x[-1] + 'learningCurves.pdf', dpi = 100)
-    plt.show()
+    plt.savefig('./plots/'+ x[-1] + 'learningCurves.pdf', dpi = 100)
     
 
 #%% plot some things
@@ -397,10 +394,10 @@ def cohen_d(x,y):
 
 #%% make instances of my DF classes using reach data
         
-imp30curves = trainingDF(pd.read_csv('imp30_curves.csv'), 30)
-exp30curves = trainingDF(pd.read_csv('exp30_curves.csv'), 30)
-imp60curves = trainingDF(pd.read_csv('imp60_curves.csv'), 60)
-exp60curves = trainingDF(pd.read_csv('exp60_curves.csv'), 60)
+imp30curves = trainingDF(pd.read_csv('data/imp30_curves.csv'), 30)
+exp30curves = trainingDF(pd.read_csv('data/exp30_curves.csv'), 30)
+imp60curves = trainingDF(pd.read_csv('data/imp60_curves.csv'), 60)
+exp60curves = trainingDF(pd.read_csv('data/exp60_curves.csv'), 60)
 
 #==============================================================================
 # imp30ae = afterEffectsDF(pd.read_csv('imp30_reachAEs.csv'), 30)
@@ -409,20 +406,20 @@ exp60curves = trainingDF(pd.read_csv('exp60_curves.csv'), 60)
 # exp60ae = afterEffectsDF(pd.read_csv('exp60_reachAEs.csv'), 60)
 #==============================================================================
 
-imp30ae_pp = afterEffectsDF_pp(pd.read_csv('imp30_reachAEs_pp.csv'), 30)
-exp30ae_pp = afterEffectsDF_pp(pd.read_csv('exp30_reachAEs_pp.csv'), 30)
-imp60ae_pp = afterEffectsDF_pp(pd.read_csv('imp60_reachAEs_pp.csv'), 60)
-exp60ae_pp = afterEffectsDF_pp(pd.read_csv('exp60_reachAEs_pp.csv'), 60)
+imp30ae_pp = afterEffectsDF_pp(pd.read_csv('data/imp30_reachAEs_pp.csv'), 30)
+exp30ae_pp = afterEffectsDF_pp(pd.read_csv('data/exp30_reachAEs_pp.csv'), 30)
+imp60ae_pp = afterEffectsDF_pp(pd.read_csv('data/imp60_reachAEs_pp.csv'), 60)
+exp60ae_pp = afterEffectsDF_pp(pd.read_csv('data/exp60_reachAEs_pp.csv'), 60)
 #==============================================================================
 # impAgae_pp = afterEffectsDF_pp(pd.read_csv('impAg_reachAEs_pp.csv'), 60)
 # expAgae_pp = afterEffectsDF_pp(pd.read_csv('expAg_reachAEs_pp.csv'), 60)
 # 
 #==============================================================================
 
-imp30tap = TapDF(pd.read_csv('imp30_passiveTapData.csv'), pd.read_csv('imp30_activeTapData.csv'), 30)
-exp30tap = TapDF(pd.read_csv('exp30_passiveTapData.csv'), pd.read_csv('exp30_activeTapData.csv'), 30)
-imp60tap = TapDF(pd.read_csv('imp60_passiveTapData.csv'), pd.read_csv('imp60_activeTapData.csv'), 60)
-exp60tap = TapDF(pd.read_csv('exp60_passiveTapData.csv'), pd.read_csv('exp60_activeTapData.csv'), 60)
+imp30tap = TapDF(pd.read_csv('data/imp30_passiveTapData.csv'), pd.read_csv('data/imp30_activeTapData.csv'), 30)
+exp30tap = TapDF(pd.read_csv('data/exp30_passiveTapData.csv'), pd.read_csv('data/exp30_activeTapData.csv'), 30)
+imp60tap = TapDF(pd.read_csv('data/imp60_passiveTapData.csv'), pd.read_csv('data/imp60_activeTapData.csv'), 60)
+exp60tap = TapDF(pd.read_csv('data/exp60_passiveTapData.csv'), pd.read_csv('data/exp60_activeTapData.csv'), 60)
 
 #%%extra plots
 #set default font for pyplot
@@ -536,8 +533,7 @@ def plotLCmeans(x = 'standard'):
         ax2.set_ylim(-10, 70)
 
     #save figure show
-    plt.savefig('blockedLearning.pdf', dpi = 100, transparency = True)
-    plt.show()
+    plt.savefig('./plots/blockedLearning.pdf', dpi = 100, transparency = True)
     
 def plotNormLCmeans(x = 'normStandard'):
     #Set colours
@@ -628,9 +624,7 @@ def plotNormLCmeans(x = 'normStandard'):
         ax2.set_ylim(-10, 70)
 
     #save figure show
-    plt.savefig('blockedNormLearning.pdf', dpi = 100, transparency = True)
-    plt.show()
-    
+    plt.savefig('./plots/blockedNormLearning.pdf', dpi = 100, transparency = True)
 
 
 def AEratios():
@@ -683,8 +677,7 @@ def AEratios():
 #    ax.set_ylim(-0.2, 1.2, auto = False)
 
     #save figure show
-    plt.savefig('AEratios.pdf', dpi = 100, transparency = True)
-    plt.show()
+    plt.savefig('./plots/AEratios.pdf', dpi = 100, transparency = True)
 
 
 #%%plot

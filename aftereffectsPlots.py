@@ -10,7 +10,7 @@ import seaborn as sns
 
 # os.chdir('c://Users/kineuser/Desktop/Shanaa/exp/explicit/data') #set the working directory AT SCHOOL PC
 #os.chdir('E://Shanaa\'s Stuff/Documents/Shanaa/exp/explicit/data') #set the working directory AT HOME
-os.chdir('D://shanaa/exp/explicit/data') #set the working directory ON LAPTOP
+# os.chdir('D://shanaa/exp/explicit/data') #set the working directory ON LAPTOP
 
 #set default font for pyplot
 plt.rc('font',family='Calibri', size = 9)
@@ -25,10 +25,10 @@ imp30col = '#e51636'
 
 #import aftereffects data
 
-aeDF60exp = pd.read_csv('exp60_reachAEs_pp.csv', usecols = [1,2]).T
-aeDF60imp = pd.read_csv('imp60_reachAEs_pp.csv', usecols = [1,2]).T
-aeDF30exp = pd.read_csv('exp30_reachAEs_pp.csv', usecols = [1,2]).T
-aeDF30imp = pd.read_csv('imp30_reachAEs_pp.csv', usecols = [1,2]).T
+aeDF60exp = pd.read_csv('data/exp60_reachAEs_pp.csv', usecols = [1,2]).T
+aeDF60imp = pd.read_csv('data/imp60_reachAEs_pp.csv', usecols = [1,2]).T
+aeDF30exp = pd.read_csv('data/exp30_reachAEs_pp.csv', usecols = [1,2]).T
+aeDF30imp = pd.read_csv('data/imp30_reachAEs_pp.csv', usecols = [1,2]).T
 
 #make array of mean values
 standard60e = aeDF60exp.mean(axis = 1)
@@ -113,8 +113,7 @@ def plotAE(x, ci):
     plt.tight_layout() #makes room for the x-axis label
     
     #save and show
-    plt.savefig('afterEffects.pdf', dpi = 100, transparency = True)
-    plt.show()
+    plt.savefig('./plots/afterEffects.pdf', dpi = 100, transparency = True)
 
 
 #%% make plot 
@@ -133,7 +132,7 @@ plotAE(standardAE, aeDFCI)
 # 
 #==============================================================================
 def plotAwareness():
-    awarenessDF = pd.read_csv('participantAwareness.csv')[['group', 'Points']]
+    awarenessDF = pd.read_csv('data/participantAwareness.csv')[['group', 'Points']]
 
     exp60aware = list(awarenessDF.loc[awarenessDF['group'] == '60explicit']['Points'])
     imp60aware = list(awarenessDF.loc[awarenessDF['group'] == '60implicit']['Points'])
@@ -190,9 +189,7 @@ def plotAwareness():
     ax.tick_params(axis='both', length= 9, width= 2)
     
     #save and show
-    plt.savefig('awarenessPlot.pdf', dpi = 100, transparency = True)
-
-    plt.show()
+    plt.savefig('./plots/awarenessPlot.pdf', dpi = 100, transparency = True)
 
 #plotAwareness()
 
@@ -253,10 +250,7 @@ def plotCorrelations(LAdata, colours):
     axes[1,0].set_xlabel('Awareness ratio')
     axes[1,1].set_xlabel('Awareness score')
 
-    plt.savefig('correlationPlots.pdf', dpi = 100, transparency = True)
-
-
-    plt.show()   
+    plt.savefig('./plots/correlationPlots.pdf', dpi = 100, transparency = True)
     
     
 def plotAwareCorr(LAdata, colours):
@@ -302,9 +296,7 @@ def plotAwareCorr(LAdata, colours):
     ax.set_ylabel('Changes in Localization (°)')
     ax.set_xlabel('Questionnaire Awareness Score')
     
-    plt.savefig('awarenessCorrPlotsFactors.pdf', dpi = 100, transparency = True)
-
-    plt.show()    
+    plt.savefig('./plots/awarenessCorrPlotsFactors.pdf', dpi = 100, transparency = True)
 
 def propPredVExc(LAdata, colours):
     
@@ -339,10 +331,8 @@ def propPredVExc(LAdata, colours):
     ax.set_xlabel('Without Strategy')
 
     
-    plt.savefig('propPredVExc.pdf', dpi = 100, transparency = True)
+    plt.savefig('./plots/propPredVExc.pdf', dpi = 100, transparency = True)
 
-
-    plt.show()    
 
 def propPredVInc(LAdata, colours):
     
@@ -378,10 +368,8 @@ def propPredVInc(LAdata, colours):
     ax.set_xlabel('With Strategy')
 
     
-    plt.savefig('propPredVInc.pdf', dpi = 100, transparency = True)
+    plt.savefig('./plots/propPredVInc.pdf', dpi = 100, transparency = True)
 
-
-    plt.show()  
     
 def propPredVRatio(LAdata, colours):
     
@@ -416,10 +404,7 @@ def propPredVRatio(LAdata, colours):
     ax.set_xlabel('Strategy Use Ratio')
 
     
-    plt.savefig('propPredVRatio.pdf', dpi = 100, transparency = True)
-
-
-    plt.show() 
+    plt.savefig('./plots/propPredVRatio.pdf', dpi = 100, transparency = True)
 
 def ExcVInc(LAdata, colours):
     
@@ -452,10 +437,8 @@ def ExcVInc(LAdata, colours):
     ax.set_xlabel('With Strategy')
 
     
-    plt.savefig('ExcVInc.pdf', dpi = 100, transparency = True)
+    plt.savefig('./plots/ExcVInc.pdf', dpi = 100, transparency = True)
 
-
-    plt.show()    
 
 
 def plotAwareCorrNonInstructed(LAdata, AEdata, colours):
@@ -486,23 +469,22 @@ def plotAwareCorrNonInstructed(LAdata, AEdata, colours):
     ax.set_ylabel('Reach Deviation \nWhen Employing Learned Strategy (°)')
     ax.set_xlabel('Questionnaire Awareness Score')
     
-    plt.savefig('awarenessCorrPlotsNoninstructed.pdf', dpi = 100, transparency = True)
+    plt.savefig('./plots/awarenessCorrPlotsNoninstructed.pdf', dpi = 100, transparency = True)
 
-    plt.show()          
     
-LAdata = {'NI30' : pd.read_csv('imp30_locAwareness.csv'),
-          'I30' : pd.read_csv('exp30_locAwareness.csv'),
-          'NI60' : pd.read_csv('imp60_locAwareness.csv'),
-          'I60' : pd.read_csv('exp60_locAwareness.csv')}
+LAdata = {'NI30' : pd.read_csv('data/imp30_locAwareness.csv'),
+          'I30' : pd.read_csv('data/exp30_locAwareness.csv'),
+          'NI60' : pd.read_csv('data/imp60_locAwareness.csv'),
+          'I60' : pd.read_csv('data/exp60_locAwareness.csv')}
 colours = {'NI30': imp30col, 'I30': exp30col, 'NI60': imp60col, 'I60': exp60col}
 offsets = {'NI30': 0.30, 'I30': 0.10, 'NI60': -0.10, 'I60': -0.30}
 affCol = '#8c058c'
 effCol = '#067217'
 
-AEdata = {'NI30' : pd.read_csv('imp30_reachAEs_pp.csv'),
-          'I30' : pd.read_csv('exp30_reachAEs_pp.csv'),
-          'NI60' : pd.read_csv('imp60_reachAEs_pp.csv'),
-          'I60' : pd.read_csv('exp60_reachAEs_pp.csv')}
+AEdata = {'NI30' : pd.read_csv('data/imp30_reachAEs_pp.csv'),
+          'I30' : pd.read_csv('data/exp30_reachAEs_pp.csv'),
+          'NI60' : pd.read_csv('data/imp60_reachAEs_pp.csv'),
+          'I60' : pd.read_csv('data/exp60_reachAEs_pp.csv')}
 
 AEdata['NI30']['group'] = 'NI30'
 AEdata['I30']['group'] = 'I30'
