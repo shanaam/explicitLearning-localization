@@ -414,7 +414,7 @@ __Instruction, but not rotation size affects the odds of getting a higher awaren
 
 # Plots
 
-```{python include = FALSE}
+```{python eval = FALSE, warning = FALSE}
 # This code uses the data in the 'data' directory to create plots included in the manuscript
 
 import sys
@@ -428,9 +428,10 @@ Run above chunk. All plots saved in the 'plots' directory.
 
 ***
 
-# Extra material and testing
 
-```{r}
+```{r include= FALSE}
+
+# used for testing stuff
 test <- t.test(subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'without'), select = reachAE ), subset(afterEffectsDF, (instruction == 'non-instructed') & (rotationSize == 30) & (stratUse == 'with'), select = reachAE ))
 
 cat("\nT-test for non-instructed 30° group -- aftereffects with vs without strategy use; mean(sd)")
