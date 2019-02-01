@@ -57,7 +57,7 @@ PopulateData_osf <- function(){
 # populate the /data directory using the osfDataFiles object
 PopulateData <- function(){
   osfDataFiles<- readRDS('osfDataFiles.rds') 
-  if (length(list.files(path = './data2')) < 3) {
+  if (length(list.files(path = './data')) < 3) {
     for(i in 1:nrow(osfDataFiles)){
       row <- osfDataFiles[i,]
       
