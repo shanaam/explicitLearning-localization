@@ -13,7 +13,12 @@ library(reticulate)
 py_available(TRUE)
 ```
 
-All data files are saved as csv files in the data directory. There are indiual files for each task and each group.
+All data files are saved as csv files in the data directory. There are indiual files for each task and each group.  
+The following code will populate the 'data' directory with the relevant data files from the Open Science Framework project __ if the 'data' directory is empty.__  
+
+```{r}
+PopulateData()
+```
 
 # Learning Curves
 
